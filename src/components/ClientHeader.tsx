@@ -3,12 +3,22 @@
 import Link from 'next/link'
 import { Search, Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import SearchModal from './SearchModal'
 
 export default function ClientHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
+  }
+
+  const openSearch = () => {
+    setIsSearchOpen(true)
+  }
+
+  const closeSearch = () => {
+    setIsSearchOpen(false)
   }
 
   return (
@@ -40,7 +50,10 @@ export default function ClientHeader() {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+            <button 
+              onClick={openSearch}
+              className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+            >
               <Search className="w-5 h-5 text-gray-600" />
             </button>
             <div className="hidden md:flex items-center space-x-2">
@@ -90,6 +103,8 @@ export default function ClientHeader() {
           </div>
         )}
       </div>
+      
+      <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
     </header>
   )
 }
